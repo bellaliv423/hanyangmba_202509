@@ -1,6 +1,7 @@
 # 설치 명령어 가이드
 # Python 패키지: pip install -r requirements.txt
 # Node.js 패키지: npm i -g @easynext/cli
+# Hero UI 알림 컴포넌트: npm install @heroui/alert
 
 # ================================
 # Python 라이브러리 목록
@@ -95,3 +96,23 @@ jupyter==1.1.1
 python-decouple==3.8
 click==8.1.7
 typer==0.14.0
+
+# ================================
+# Node.js 패키지 목록 (package.json 참조)
+# ================================
+
+# UI/UX 컴포넌트 라이브러리
+# @heroui/alert==최신버전 (알림 컴포넌트)
+
+# 개발 도구
+# @easynext/cli==최신버전 (개발 효율성 도구)
+
+# ================================
+# 디지털 비즈니스 모델 프로젝트 특화 패키지
+# ================================
+
+# 비즈니스 모델 캔버스 시각화: plotly, networkx
+# 프레젠테이션 생성: python-pptx, streamlit
+# 경쟁 분석 자동화: requests, beautifulsoup4, scrapy
+# 데이터 분석 및 인사이트: pandas, numpy, scipy
+# AI 기반 전략 수립: openai, transformers, langchain

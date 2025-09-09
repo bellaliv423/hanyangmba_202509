@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메가커피 vs 스타벅스 비즈니스 분석 PPT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8f9fa;
+            overflow-x: hidden;
+        }
+        /* PPT 슬라이드 컨테이너 - 16:9 비율 */
+        
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            scroll-snap-type: y mandatory;
+            overflow-y: auto;
+        }
+        /* 각 슬라이드 - 정확한 16:9 비율 유지 */
+        
+        .slide {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            scroll-snap-align: start;
+            position: relative;
+            background: white;
+            padding: 60px 80px;
+        }
+        /* 슬라이드 타이틀 */
+        
+        .slide-header {
+            position: absolute;
+            top: 40px;
+            left: 80px;
+            right: 80px;
+            z-index: 10;
+        }
+        
+        .slide-title {
+            font-size: 48px;
+            font-weight: 900;
+            color: #212529;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+        
+        .slide-subtitle {
+            font-size: 24px;
+            color: #6c757d;
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+        /* 타이틀 슬라이드 */
+        
+        .title-slide {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .title-slide .main-title {
+            font-size: 72px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .title-slide .main-subtitle {
+            font-size: 32px;
+            opacity: 0.95;
+            margin-bottom: 60px;
+        }
+        
+        .title-slide .date {
+            font-size: 24px;
+            opacity: 0.8;
+        }
+        /* 콘텐츠 슬라이드 */
+        
+        .content-area {
+            width: 100%;
+            max-width: 1400px;
+            margin-top: 150px;
+        }
+        /* 비즈니스 모델 캔버스 */
+        
+        .canvas-wrapper {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 40px;
+            margin-top: 20px;
+        }
+        
+        .brand-banner {
+            padding: 20px;
+            font-size: 32px;
+            font-weight: 800;
+            text-align: center;
+            color: white;
+        }
+        
+        .mega-banner {
+            background: linear-gradient(135deg, #FFA500 0%, #FFD700 100%);
+        }
+        
+        .star-banner {
+            background: linear-gradient(135deg, #00704A 0%, #00A862 100%);
+        }
+        
+        .canvas-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(3, 200px);
+            gap: 1px;
+            background: #e9ecef;
+        }
+        
+        .canvas-item {
+            background: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .canvas-item-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #495057;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .canvas-item-content {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #212529;
+        }
+        
+        .canvas-item-content li {
+            margin-bottom: 6px;
+            padding-left: 16px;
+            position: relative;
+        }
+        
+        .canvas-item-content li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+        /* 경쟁우위 분석표 */
+        
+        .comparison-table {
+            width: 100%;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .table-wrapper {
+            overflow-x: auto;
+        }
+        
+        .analysis-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .analysis-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .analysis-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .analysis-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .category-cell {
+            background: #f8f9fa;
+            font-weight: 700;
+            color: #495057;
+        }
+        /* 차트 슬라이드 */
+        
+        .chart-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .chart-box {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .chart-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 20px;
+        }
+        
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            height: 200px;
+            gap: 20px;
+        }
+        
+        .bar {
+            flex: 1;
+            background: linear-gradient(to top, #667eea, #764ba2);
+            border-radius: 8px 8px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .bar:hover {
+            transform: translateY(-5px);
+        }
+        
+        .bar-label {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: 700;
+            font-size: 14px;
+        }
+        /* 인사이트 박스 */
+        
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .insight-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid;
+            transition: transform 0.3s ease;
+        }
+        
+        .insight-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .insight-card:nth-child(1) {
+            border-top-color: #667eea;
+        }
+        
+        .insight-card:nth-child(2) {
+            border-top-color: #764ba2;
+        }
+        
+        .insight-card:nth-child(3) {
+            border-top-color: #f093fb;
+        }
+        
+        .insight-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 15px;
+        }
+        
+        .insight-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #495057;
+        }
+        /* 페이지 네비게이션 */
+        
+        .page-nav {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+        
+        .page-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #dee2e6;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .page-dot.active {
+            background: #667eea;
+            transform: scale(1.5);
+        }
+        /* 애니메이션 */
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        /* 반응형 디자인 */
+        
+        @media (max-width: 1200px) {
+            .slide {
+                padding: 40px;
+            }
+            .slide-title {
+                font-size: 36px;
+            }
+            .chart-container,
+            .insight-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* 프린트 스타일 */
+        
+        @media print {
+            .slide {
+                page-break-after: always;
+                height: 100vh;
+            }
+            .page-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-container">
+        <!-- 슬라이드 1: 타이틀 -->
+        <div class="slide title-slide">
+            <h1 class="main-title">메가커피 vs 스타벅스</h1>
+            <p class="main-subtitle">한국 커피 시장의 양극화 전략 분석</p>
+            <div style="margin-top: 40px; margin-bottom: 40px;">
+                <p style="font-size: 28px; font-weight: 700; margin-bottom: 20px;">팀명: ACE (AI, Connected, Enterprise)</p>
+                <p style="font-size: 20px; margin-bottom: 15px;">팀원: 황영아, 주대동, 김형민, 김대우</p>
+                <p style="font-size: 18px; margin-bottom: 15px;">한양대학교 MBA - 디지털비즈니스모델과신사업개발</p>
+                <p style="font-size: 18px; font-weight: 600;">1주차 Lab: 비즈니스 모델 캔버스</p>
+            </div>
+            <p class="date">2025년 9월 | MBA 비즈니스 분석 리포트</p>
+        </div>
+
+        <!-- 슬라이드 2: 시장 현황 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">2025 한국 커피 시장 현황</h2>
+                <p class="slide-subtitle">Market Overview & Key Performance Indicators</p>
+            </div>
+            <div class="content-area">
+                <div class="chart-container">
+                    <div class="chart-box">
+                        <h3 class="chart-title">매출 규모 (2024)</h3>
+                        <div class="bar-chart">
+                            <div class="bar" style="height: 90%">
+                                <span class="bar-value">3.1조원</span>
+                                <span class="bar-label">스타벅스</span>
+                            </div>
+                            <div class="bar" style="height: 16%; background: linear-gradient(to top, #FFA500, #FFD700)">
+                                <span class="bar-value">4,960억원</span>
+                                <span class="bar-label">메가커피</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-box">
+                        <h3 class="chart-title">영업이익률</h3>
+                        <div class="bar-chart">
+                            <div class="bar" style="height: 28%">
+                                <span class="bar-value">6.1%</span>
+                                <span class="bar-label">스타벅스</span>
+                            </div>
+                            <div class="bar" style="height: 100%; background: linear-gradient(to top, #FFA500, #FFD700)">
+                                <span class="bar-value">21.7%</span>
+                                <span class="bar-label">메가커피</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-box">
+                        <h3 class="chart-title">매장 수</h3>
+                        <div class="bar-chart">
+                            <div class="bar" style="height: 57%">
+                                <span class="bar-value">2,009개</span>
+                                <span class="bar-label">스타벅스</span>
+                            </div>
+                            <div class="bar" style="height: 100%; background: linear-gradient(to top, #FFA500, #FFD700)">
+                                <span class="bar-value">3,500개</span>
+                                <span class="bar-label">메가커피</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-box">
+                        <h3 class="chart-title">객단가</h3>
+                        <div class="bar-chart">
+                            <div class="bar" style="height: 100%">
+                                <span class="bar-value">12,800원</span>
+                                <span class="bar-label">스타벅스</span>
+                            </div>
+                            <div class="bar" style="height: 27%; background: linear-gradient(to top, #FFA500, #FFD700)">
+                                <span class="bar-value">3,500원</span>
+                                <span class="bar-label">메가커피</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 슬라이드 3: 메가커피 비즈니스 모델 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">메가커피 비즈니스 모델 캔버스</h2>
+                <p class="slide-subtitle">Value-Driven Business Model</p>
+            </div>
+            <div class="content-area">
+                <div class="canvas-wrapper">
+                    <div class="brand-banner mega-banner">MEGA COFFEE</div>
+                    <div class="canvas-grid">
+                        <div class="canvas-item" style="grid-row: span 2;">
+                            <div class="canvas-item-title">Key Partners</div>
+                            <div class="canvas-item-content">
+                                <li>원재료 대량공급사 (3,000톤 구매력)</li>
+                                <li>가맹점주 3,500개 (2025)</li>
+                                <li>배달앱 플랫폼</li>
+                                <li>키오스크/자동화 업체</li>
+                            </div>
+                        </div>
+                        <div class="canvas-item">
+                            <div class="canvas-item-title">Key Activities</div>
+                            <div class="canvas-item-content">
+                                <li>가맹점 관리 & 표준화</li>
+                                <li>원부재료 통합 배송</li>
+                                <li>효율 운영 시스템</li>
+                                <li>급속 매장 확장</li>
+                            </div>
+                        </div>
+                        <div class="canvas-item" style="grid-row: span 2;">
+                            <div class="canvas-item-title">Value Propositions</div>
+                            <div class="canvas-item-content">
+                                <li><strong>가성비 최강 (1,500원)</strong></li>
+                                <li><strong>대용량 650ml</strong></li>
+                                <li>빠른 제조 (58초)</li>
+                                <li>편의성 극대화</li>
+                            </div>
+                        </div>
+                        <div class="canvas-item">
+                            <div class="canvas-item-title">Customer Relations</div>
+                            <div class="canvas-item-content">
+                                <li>앱 기반 주문 (4.8점)</li>
+                                <li>간편 적립 시스템</li>
+                                <li>배달 중심 서비스</li>
+                                <li>1인 운영 효율성</li>
+                            </div>
+                        </div>
+                        <div class="canvas-item" style="grid-row: span 2;">
+                            <div class="canvas-item-title">Customer Segments</div>
+                            <div class="canvas-item-content">
+                                <li><strong>가성비 테이크아웃 개인</strong><br><small>(학생/인근 직장인)</small></li>
+                                <li><strong>배달·단체 주문</strong><br><small>(오피스/학원/모임)</small></li>
+                                <li><strong>가맹점주(잠재/기존)</strong><br><small>(본사 기준의 고객)</small></li>
+                            </div>
+                        </div>
+                        <div class="canvas-item">
+                            <div class="canvas-item-title">Key Resources</div>
+                            <div class="canvas-item-content">
+                                <li>'가성비' 브랜드 포지셔닝</li>
+                                <li>표준화된 가맹 시스템</li>
+                                <li>대량구매 원가우위</li>
+                                <li>극단적 효율성</li>
+                            </div>
+                        </div>
+                        <div class="canvas-item">
+                            <div class="canvas-item-title">Channels</div>
+                            <div class="canvas-item-content">
+                                <li>가맹점 매장 (3,500개)</li>
+                                <li>배달앱 35%</li>
+                                <li>키오스크 85% 자동화</li>
+                                <li>테이크아웃 특화</li>
+                            </div>
+                        </div>
+                        <div class="canvas-item" style="grid-column: span 2;">
+                            <div class="canvas-item-title">Cost Structure</div>
+                            <div class="canvas-item-content">
+                                원재료비 22% (원가 -35%) | 물류/배송 효율화 | 마케팅 60억/년 | 극한 비용최적화
+                            </div>
+                        </div>
+                        <div class="canvas-item" style="grid-column: span 3;">
+                            <div class="canvas-item-title">Revenue Streams</div>
+                            <div class="canvas-item-content">
+                                <strong>매출 4,960억 (35%↑)</strong> | 가맹비 1,000만원 | 원부재료 납품 4,672억 | 로열티 3% | <strong>영업익 1,000억 (21.7%)</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 슬라이드 4: 스타벅스 비즈니스 모델 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">스타벅스 비즈니스 모델 캔버스</h2>
+                <p class="slide-subtitle">Experience-Driven Business Model</p>
+            </div>
+            <div class="content-area">
+                <div class="canvas-wrapper">
+                    <div class="brand-banner star-banner">STARBUCKS</div>
+                    <div class="canvas-grid">
+                        <div class="canvas-item" style="grid-row: span 2;">
+                            <div class="canvas-item-title">Key Partners</div>
+                            <div class="canvas-item-content">
+                                <li>글로벌 원두 농장 직거래</li>
+                                <li>C.A.F.E. 인증 농장 40만개</li>
+                                <li>1급지 부동산 파트너</li>
+                                <li>ESG 공급망 협력사</li>
+                            </div>
+                        </div>
+                        <div class="canvas-item">
+                            <div class="canvas-item-title">Key Activities</div>
+                            <div class="canvas-item-content">
+                                <li>프리미엄 매장 운영</li>
+                                <li>바리스타 전문 교육</li>
+                                <li>브랜드 체험 관리</li>
+                                <li>디지털 혁신 (시간연장)</li>
+                            </div>
+                        </div>
+                        <div class="canvas-item" style="grid-row: span 2;">
+                            <div class="canvas-item-title">Value Propositions</div>
+                            <div class="canvas-item-content">
+                                <li><strong>'제3의 공간' 경험</strong></li>
+                                <li>프리미엄 브랜드 $53.4B</li>
+                                <li>고객 편의성 강화</li>
+                                <li>리저브 특수매장</li>
+                            </div>
+                        </div>
+                        <div class="canvas-item">
+                            <div class="canvas-item-title">Customer Relations</div>
+                            <div class="canvas-item-content">
+                                <li>Rewards 580만 회원</li>
+                                <li>개인맞춤 서비스</li>
+                                <li>커뮤니티 공간</li>
+                                <li>선불카드 락인</li>
+                            </div>
+                        </div>
+                        <div class="canvas-item" style="grid-row: span 2;">
+                            <div class="canvas-item-title">Customer Segments</div>
+                            <div class="canvas-item-content">
+                                <li><strong>프리미엄 체류 고객</strong><br><small>(제3의 공간: 공부/미팅/휴식)</small></li>
+                                <li><strong>편의·속도 고객</strong><br><small>(모바일오더/드라이브스루/배달)</small></li>
+                                <li><strong>기업·단체(B2B)</strong><br><small>(기프트카드·대량 구매)</small></li>
+                                <li><strong>스페셜티 애호가</strong><br><small>(리저브·싱글오리진 경험)</small></li>
+                            </div>
+                        </div>
+                        <div class="canvas-item">
+                            <div class="canvas-item-title">Key Resources</div>
+                            <div class="canvas-item-content">
+                                <li>글로벌 브랜드 파워</li>
+                                <li>직영점 2,009개 (2025)</li>
+                                <li>전문 바리스타 인력</li>
+                                <li>데이터 & 디지털 자산</li>
+                            </div>
+                        </div>
+                        <div class="canvas-item">
+                            <div class="canvas-item-title">Channels</div>
+                            <div class="canvas-item-content">
+                                <li>직영 매장 (핵심)</li>
+                                <li>DT(드라이브스루) 25%</li>
+                                <li>Siren Order 앱</li>
+                                <li>특수매장 확대</li>
+                            </div>
+                        </div>
+                        <div class="canvas-item" style="grid-column: span 2;">
+                            <div class="canvas-item-title">Cost Structure</div>
+                            <div class="canvas-item-content">
+                                인건비 35% | 1급지 임대료 | 매장투자 5억/점 | 영업이익률 4.8% (수익성 과제)
+                            </div>
+                        </div>
+                        <div class="canvas-item" style="grid-column: span 3;">
+                            <div class="canvas-item-title">Revenue Streams</div>
+                            <div class="canvas-item-content">
+                                <strong>매출 3조 달성</strong> | 음료판매 60% | MD/굿즈 2,800억 | 기프트카드 1.2조 | B2B 3,200억
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 슬라이드 5: 경쟁우위 분석 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">경쟁우위 및 모방장벽 분석</h2>
+                <p class="slide-subtitle">Competitive Advantage & Imitation Barriers</p>
+            </div>
+            <div class="content-area">
+                <div class="comparison-table">
+                    <div class="table-wrapper">
+                        <table class="analysis-table">
+                            <thead>
+                                <tr>
+                                    <th width="15%">평가항목</th>
+                                    <th width="25%">스타벅스 우위</th>
+                                    <th width="18%">모방장벽</th>
+                                    <th width="25%">메가커피 우위</th>
+                                    <th width="17%">모방장벽</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="category-cell">포지셔닝</td>
+                                    <td>프리미엄 경험, 제3의 공간</td>
+                                    <td>50년 브랜드 자산</td>
+                                    <td>가성비 최강, 대용량</td>
+                                    <td>원가구조 40% 차이</td>
+                                </tr>
+                                <tr>
+                                    <td class="category-cell">디지털/락인</td>
+                                    <td>리워즈 580만, 선불 1.2조</td>
+                                    <td>10년 축적 데이터</td>
+                                    <td>키오스크 85%, 앱 4.8점</td>
+                                    <td>기술도입 용이</td>
+                                </tr>
+                                <tr>
+                                    <td class="category-cell">공급망</td>
+                                    <td>직거래 40만 농장</td>
+                                    <td>20년 관계구축</td>
+                                    <td>원가 -35%, 다변화</td>
+                                    <td>3,000톤 구매력</td>
+                                </tr>
+                                <tr>
+                                    <td class="category-cell">운영체계</td>
+                                    <td>바리스타 교육, 만족 92%</td>
+                                    <td>서비스 DNA</td>
+                                    <td>제조 58초, 1인운영</td>
+                                    <td>극단적 표준화</td>
+                                </tr>
+                                <tr>
+                                    <td class="category-cell">재무탄력성</td>
+                                    <td>객단가 12,800원</td>
+                                    <td>가격저항 한계</td>
+                                    <td>영업이익률 21.7%</td>
+                                    <td>원자재 민감</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 슬라이드 6: 핵심 인사이트 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">핵심 인사이트 & 전략 제언</h2>
+                <p class="slide-subtitle">Key Insights & Strategic Recommendations</p>
+            </div>
+            <div class="content-area">
+                <div class="insight-grid">
+                    <div class="insight-card">
+                        <h3 class="insight-title">🎯 시장 양극화</h3>
+                        <div class="insight-content">
+                            <p><strong>효율성 vs 경험</strong></p>
+                            <p>두 브랜드는 상호 보완적 균형을 형성. 중간 포지션 기업들의 생존 위협</p>
+                        </div>
+                    </div>
+
+                    <div class="insight-card">
+                        <h3 class="insight-title">💡 모방의 역설</h3>
+                        <div class="insight-content">
+                            <p><strong>정체성 고수가 핵심</strong></p>
+                            <p>상대 영역 침범 시 브랜드 정체성 상실. 각자 영역 방어가 최선</p>
+                        </div>
+                    </div>
+
+                    <div class="insight-card">
+                        <h3 class="insight-title">📈 미래 전망</h3>
+                        <div class="insight-content">
+                            <p><strong>2026년 시장 재편</strong></p>
+                            <p>메가커피 31.5%, 스타벅스 25.1% 예상. 경기침체가 변수</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 60px; text-align: center;">
+                    <h3 style="font-size: 28px; margin-bottom: 20px; color: #212529;">전략적 제언</h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 1000px; margin: 0 auto;">
+                        <div style="background: linear-gradient(135deg, #f8f9fa, white); padding: 30px; border-radius: 12px; border-left: 4px solid #00704A;">
+                            <h4 style="color: #00704A; margin-bottom: 15px;">스타벅스</h4>
+                            <p style="text-align: left;">• 프리미엄 정체성 강화<br>• 디지털 격차 축소<br>• 운영 효율성 선별 도입</p>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #f8f9fa, white); padding: 30px; border-radius: 12px; border-left: 4px solid #FFA500;">
+                            <h4 style="color: #FFA500; margin-bottom: 15px;">메가커피</h4>
+                            <p style="text-align: left;">• 브랜드 신뢰도 구축<br>• 품질 시스템 고도화<br>• ESG 경영 도입</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 슬라이드 7: 결론 -->
+        <div class="slide title-slide">
+            <h2 class="main-title" style="font-size: 56px;">결론</h2>
+            <p class="main-subtitle" style="font-size: 28px; line-height: 1.6; max-width: 900px;">
+                "한국 커피 시장은 '양극화 균형(Polarized Equilibrium)' 상태 도달<br><br>
+                각자의 핵심 역량에서 '모방 불가능한 자원' 구축 완료<br><br>
+                진정한 혁신은 제3의 모델 출현에서 찾아야 할 시점"
+            </p>
+            <p class="date" style="margin-top: 60px;">Thank You</p>
+        </div>
+        
+        <!-- 슬라이드 8: 참고자료 및 출처 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">참고자료 및 출처</h2>
+                <p class="slide-subtitle" style="margin-bottom: 30px;">References & Data Sources</p>
+            </div>
+            <div class="content-area" style="margin-top: 120px;">
+                <div class="comparison-table">
+                    <div class="table-wrapper">
+                        <table class="analysis-table">
+                            <thead>
+                                <tr>
+                                    <th width="25%">출처 분류</th>
+                                    <th width="75%">참고자료</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="category-cell">📊 최신 실적 데이터<br>(2024-2025)</td>
+                                    <td style="font-size: 12px; line-height: 1.5;">
+                                        <strong>스타벅스:</strong> 세계일보 (2025.02.12), 뉴시스 (2024.11.14), CEOSCOREDAILY (2024.09.04)<br>
+                                        <strong>메가커피:</strong> 아시아경제 (2025.04.02), 한국일보 (2025.05.05), 뉴시스 (2025.05.02)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="category-cell">🏢 비즈니스 모델<br>분석 자료</td>
+                                    <td style="font-size: 12px; line-height: 1.5;">
+                                        • 스타벅스 공식 홈페이지 및 연차보고서<br>
+                                        • 메가커피(앤하우스) 투자자 관계 자료<br>
+                                        • 한국프랜차이즈협회 통계 자료
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="category-cell">📈 분석 방법론</td>
+                                    <td style="font-size: 12px; line-height: 1.5;">
+                                        • Porter's Five Forces, Business Model Canvas (Osterwalder & Pigneur)<br>
+                                        • VRIO 프레임워크, 시장 포지셔닝 매트릭스<br>
+                                        • 재무제표 분석 및 경쟁우위 분석
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px; text-align: center; padding: 20px; background: linear-gradient(135deg, #f8f9fa, white); border-radius: 12px; border: 2px solid #e9ecef;">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; max-width: 500px; margin: 0 auto; font-size: 11px; color: #6c757d;">
+                        <p><strong>분석 기준일:</strong> 2025년 9월 9일</p>
+                        <p><strong>작성자:</strong> 한양대학교 MBA 과정</p>
+                        <p><strong>과목:</strong> 디지털 비즈니스 모델 및 신사업 개발</p>
+                        <p><strong>검색 도구:</strong> Claude Code with Web Search</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 페이지 네비게이션 -->
+    <div class="page-nav">
+        <div class="page-dot active"></div>
+        <div class="page-dot"></div>
+        <div class="page-dot"></div>
+        <div class="page-dot"></div>
+        <div class="page-dot"></div>
+        <div class="page-dot"></div>
+        <div class="page-dot"></div>
+        <div class="page-dot"></div>
+    </div>
+    
+    <script>
+        // 슬라이드 네비게이션
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.page-dot');
+        let currentSlide = 0;
+        
+        // IntersectionObserver로 현재 슬라이드 감지
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = Array.from(slides).indexOf(entry.target);
+                    currentSlide = index;
+                    updateDots();
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        slides.forEach(slide => observer.observe(slide));
+        
+        // 점 클릭 시 슬라이드 이동
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                slides[index].scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // 활성 점 업데이트
+        function updateDots() {
+            dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+        
+        // 키보드 네비게이션
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+        
+        // 풀스크린 토글 (F11 키)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F11') {
+                e.preventDefault();
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

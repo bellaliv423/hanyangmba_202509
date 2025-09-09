@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메가커피 vs 스타벅스 비즈니스 모델 분석</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .canvas-container {
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .brand-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            font-size: 1.8em;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .megacoffee-header {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        .starbucks-header {
+            background: linear-gradient(135deg, #0ba360 0%, #3cba92 100%);
+        }
+        
+        .canvas {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+            grid-template-rows: repeat(2, 1fr) 1fr;
+            gap: 2px;
+            background: #e0e0e0;
+            border: 2px solid #e0e0e0;
+            border-radius: 0 0 10px 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .canvas-block {
+            background: white;
+            padding: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .canvas-block:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        
+        .block-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+        
+        .block-content {
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+        
+        .block-content ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .block-content li {
+            margin-bottom: 8px;
+            padding-left: 15px;
+            position: relative;
+        }
+        
+        .block-content li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+        }
+        
+        .key-partners { 
+            grid-row: span 2; 
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe0e0 100%);
+        }
+        
+        .key-activities { 
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe8b3 100%);
+        }
+        
+        .key-resources { 
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+        
+        .value-propositions { 
+            grid-row: span 2;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        }
+        
+        .customer-relationships { 
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        }
+        
+        .channels { 
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+        }
+        
+        .customer-segments { 
+            grid-row: span 2;
+            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+        }
+        
+        .cost-structure { 
+            grid-column: span 2;
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        }
+        
+        .revenue-streams { 
+            grid-column: span 3;
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        }
+        
+        .comparison-table {
+            margin-top: 50px;
+            animation: slideUp 0.8s ease-in;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .table-title {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2em;
+            font-weight: bold;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .category-column {
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .starbucks-cell {
+            background: linear-gradient(to right, #e8f5e9 0%, #f1f8e9 100%);
+        }
+        
+        .megacoffee-cell {
+            background: linear-gradient(to right, #fff3e0 0%, #ffe0b2 100%);
+        }
+        
+        .barrier-cell {
+            background: #f5f5f5;
+            font-style: italic;
+            color: #666;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 메가커피 vs 스타벅스 비즈니스 모델 분석</h1>
+        <p class="subtitle">2025년 9월 기준 | MBA 전문가 팀 종합 분석</p>
+        
+        <!-- 메가커피 비즈니스 모델 캔버스 -->
+        <div class="canvas-container">
+            <div class="brand-header megacoffee-header">☕ 메가커피 비즈니스 모델 캔버스</div>
+            <div class="canvas">
+                <div class="canvas-block key-partners">
+                    <div class="block-title">핵심 파트너</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>원재료 대량 공급사 (연 3,000톤)</li>
+                            <li>가맹점주 네트워크 (3,500개)</li>
+                            <li>배달 플랫폼 (배민, 쿠팡이츠)</li>
+                            <li>부동산 중개 네트워크</li>
+                            <li>물류 파트너</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="canvas-block key-activities">
+                    <div class="block-title">핵심 활동</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>가맹점 관리/지원</li>
+                            <li>원부재료 구매/배송</li>
+                            <li>표준화된 레시피 관리</li>
+                            <li>신메뉴 개발 (분기 2-3종)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="canvas-block value-propositions">
+                    <div class="block-title">가치 제안</div>
+                    <div class="block-content">
+                        <ul>
+                            <li><strong>가성비 최강</strong>: 1,500-2,500원</li>
+                            <li><strong>대용량</strong>: 650ml 기본</li>
+                            <li><strong>빠른 서비스</strong>: 제조 58초</li>
+                            <li><strong>편의성</strong>: 키오스크 85%</li>
+                            <li><strong>접근성</strong>: 배달 특화</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="canvas-block customer-relationships">
+                    <div class="block-title">고객 관계</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>앱 기반 간편 주문</li>
+                            <li>적립 프로그램</li>
+                            <li>배달 중심 서비스</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="canvas-block customer-segments">
+                    <div class="block-title">고객 세그먼트</div>
+                    <div class="block-content">
+                        <ul>
+                            <li><strong>주요</strong>: 2030 실용주의</li>
+                            <li>가성비 추구 직장인</li>
+                            <li>대학생/취준생</li>
+                            <li>배달 선호 고객</li>
+                            <li>테이크아웃 중심</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="canvas-block key-resources">
+                    <div class="block-title">핵심 자원</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>가맹점 네트워크</li>
+                            <li>표준화 시스템</li>
+                            <li>대량구매력</li>
+                            <li>브랜드 인지도</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="canvas-block channels">
+                    <div class="block-title">채널</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>가맹점 매장</li>
+                            <li>배달앱 (35%)</li>
+                            <li>자체 앱</li>
+                            <li>키오스크</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="canvas-block cost-structure">
+                    <div class="block-title">비용 구조</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>원재료비 (22%)</li>
+                            <li>물류/배송비</li>
+                            <li>마케팅비 (연 60억)</li>
+                            <li>직영점 운영비 (20개)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="canvas-block revenue-streams">
+                    <div class="block-title">수익원</div>
+                    <div class="block-content">
+                        <ul>
+                            <li><strong>가맹수익</strong>: 가맹비 1,000만원, 교육비 500만원</li>
+                            <li><strong>원부재료 납품</strong>: 매출 4,672억원 (94%)</li>
+                            <li><strong>로열티</strong>: 매출액 3%</li>
+                            <li><strong>직영점 매출</strong>: 약 6%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 스타벅스 비즈니스 모델 캔버스 -->
+        <div class="canvas-container">
+            <div class="brand-header starbucks-header">⭐ 스타벅스 비즈니스 모델 캔버스</div>
+            <div class="canvas">
+                <div class="canvas-block key-partners">
+                    <div class="block-title">핵심 파트너</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>글로벌 원두 직거래 농장</li>
+                            <li>C.A.F.E. 인증 40만 농장</li>
+                            <li>부동산 파트너 (1급지)</li>
+                            <li>MD 라이센싱 파트너</li>
+                            <li>B2B 기업 고객</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="canvas-block key-activities">
+                    <div class="block-title">핵심 활동</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>프리미엄 매장 운영</li>
+                            <li>바리스타 교육 (240시간)</li>
+                            <li>R&D/신메뉴 개발</li>
+                            <li>브랜드 경험 관리</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="canvas-block value-propositions">
+                    <div class="block-title">가치 제안</div>
+                    <div class="block-content">
+                        <ul>
+                            <li><strong>제3의 공간</strong>: 체류 67분</li>
+                            <li><strong>프리미엄 경험</strong></li>
+                            <li><strong>브랜드 가치</strong>: $53.4B</li>
+                            <li><strong>품질 일관성</strong></li>
+                            <li><strong>라이프스타일</strong></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="canvas-block customer-relationships">
+                    <div class="block-title">고객 관계</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>Rewards 프로그램</li>
+                            <li>개인화 서비스</li>
+                            <li>커뮤니티 형성</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="canvas-block customer-segments">
+                    <div class="block-title">고객 세그먼트</div>
+                    <div class="block-content">
+                        <ul>
+                            <li><strong>주요</strong>: 프리미엄 선호층</li>
+                            <li>화이트칼라 직장인</li>
+                            <li>공간 경험 추구자</li>
+                            <li>브랜드 충성 고객</li>
+                            <li>기업 B2B</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="canvas-block key-resources">
+                    <div class="block-title">핵심 자원</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>글로벌 브랜드</li>
+                            <li>직영점 2,000개+</li>
+                            <li>바리스타 인력</li>
+                            <li>공급망 네트워크</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="canvas-block channels">
+                    <div class="block-title">채널</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>직영 매장</li>
+                            <li>DT (25%)</li>
+                            <li>Siren Order</li>
+                            <li>B2B 채널</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="canvas-block cost-structure">
+                    <div class="block-title">비용 구조</div>
+                    <div class="block-content">
+                        <ul>
+                            <li>인건비 (35%)</li>
+                            <li>임대료 (평당 15만원)</li>
+                            <li>원재료비</li>
+                            <li>매장 투자 (5억/점)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="canvas-block revenue-streams">
+                    <div class="block-title">수익원</div>
+                    <div class="block-content">
+                        <ul>
+                            <li><strong>음료 판매</strong>: 매출 60%</li>
+                            <li><strong>MD/굿즈</strong>: 연 2,800억원</li>
+                            <li><strong>기프트카드</strong>: 선불 1.2조원</li>
+                            <li><strong>B2B/RTD</strong>: 연 3,200억원</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 경쟁우위 분석표 -->
+        <div class="comparison-table">
+            <h2 class="table-title">🎯 경쟁우위 및 모방장벽 분석</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">평가 항목</th>
+                        <th style="width: 25%;">스타벅스 우위</th>
+                        <th style="width: 18%;">모방 장벽</th>
+                        <th style="width: 25%;">메가커피 우위</th>
+                        <th style="width: 17%;">모방 장벽</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="category-column">포지셔닝/<br>지불의사</td>
+                        <td class="starbucks-cell">• 프리미엄 경험<br>• 제3의 공간<br>• 객단가 12,800원</td>
+                        <td class="barrier-cell">50년 브랜드 자산<br>공간투자 300만원/평<br>240시간 교육체계</td>
+                        <td class="megacoffee-cell">• 가성비 최강<br>• 대용량 650ml<br>• 가격 1,500-2,500원</td>
+                        <td class="barrier-cell">원가구조 40% 차이<br>표준레시피 30개<br>연 3,000톤 구매력</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="category-column">디지털/락인</td>
+                        <td class="starbucks-cell">• 리워즈 MAU 580만<br>• 선불잔액 1.2조<br>• AI 개인화 추천</td>
+                        <td class="barrier-cell">10년 축적 데이터<br>1인당 보유 23만원<br>이탈비용 심리장벽</td>
+                        <td class="megacoffee-cell">• 키오스크 85%<br>• 간편적립 2초<br>• 앱 평점 4.8</td>
+                        <td class="barrier-cell">기술도입 용이<br>데이터 깊이 부족<br>충성프로그램 약함</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="category-column">공급망/<br>품질관리</td>
+                        <td class="starbucks-cell">• 직거래 농장 40만<br>• C.A.F.E. 인증<br>• QC 전문 230명</td>
+                        <td class="barrier-cell">20년 관계구축<br>연 R&D 500억<br>글로벌 물류망</td>
+                        <td class="megacoffee-cell">• 원두원가 -35%<br>• 공급처 12개 다변화<br>• 재고회전 주 2.5회</td>
+                        <td class="barrier-cell">연 3,000톤 구매력<br>SKU 30개 단순화<br>중앙배송 시스템</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="category-column">공간·부동산</td>
+                        <td class="starbucks-cell">• 플래그십/리저브<br>• DT 체류가치<br>• 1급지 선점</td>
+                        <td class="barrier-cell">CAPEX 5억/점<br>10년 장기계약<br>입지 선점완료</td>
+                        <td class="megacoffee-cell">• 소형점포 15평<br>• 상권침투력<br>• 회전율 일450회</td>
+                        <td class="barrier-cell">CAPEX 8천만원<br>2차상권 최적화<br>빠른 출점능력</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="category-column">운영체계</td>
+                        <td class="starbucks-cell">• 바리스타 교육<br>• 서비스 경험<br>• 만족도 92%</td>
+                        <td class="barrier-cell">서비스 문화 DNA<br>인건비 35%<br>파트너 문화</td>
+                        <td class="megacoffee-cell">• 린 오퍼레이션<br>• 제조시간 58초<br>• 1인운영 65%</td>
+                        <td class="barrier-cell">극단적 표준화<br>자동화율 78%<br>단순 메뉴구성</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="category-column">메뉴/MD/<br>브랜딩</td>
+                        <td class="starbucks-cell">• 시즌한정 분기15종<br>• MD매출 2,800억<br>• 텀블러 재구매 68%</td>
+                        <td class="barrier-cell">R&D센터 200명<br>글로벌 트렌드<br>브랜드 팬덤</td>
+                        <td class="megacoffee-cell">• 시그니처 달달<br>• 토핑 업셀 18%<br>• 출시속도 2주</td>
+                        <td class="barrier-cell">트렌드 민감도<br>빠른 의사결정<br>원가여력 한계</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="category-column">채널 다양화</td>
+                        <td class="starbucks-cell">• 앱/DT/매장 균형<br>• B2B 기업영업<br>• 시스템 통합</td>
+                        <td class="barrier-cell">시스템 복잡도<br>채널별 차별화<br>B2B 관계구축</td>
+                        <td class="megacoffee-cell">• 배달최적화 35%<br>• 단체주문 20%<br>• 프로모션 유연성</td>
+                        <td class="barrier-cell">배달동선 최적화<br>포장 표준화<br>프로모션 운용</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="category-column">수익모델<br>다각화</td>
+                        <td class="starbucks-cell">• 기프트카드 1.2조<br>• MD/B2B 6,000억<br>• RTD 시장 42%</td>
+                        <td class="barrier-cell">선불 신뢰도<br>법인 영업력<br>브랜드 선물가치</td>
+                        <td class="megacoffee-cell">• 가맹수익 35%<br>• 원부재 마진 25%<br>• 로열티 3%</td>
+                        <td class="barrier-cell">가맹점 1,850개<br>공급망 통제력<br>가맹 신뢰구축</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="category-column">재무 탄력성</td>
+                        <td class="starbucks-cell">• 객단가 12,800원<br>• 영업이익률 6.1%<br>• 가격인상 여력 5%</td>
+                        <td class="barrier-cell">가격 저항한계<br>고정비 부담<br>경기 민감도</td>
+                        <td class="megacoffee-cell">• 원가율 22%<br>• 영업이익률 21.7%<br>• 회전율 일450회</td>
+                        <td class="barrier-cell">원자재 가격민감<br>마진압박 위험<br>품질하락 우려</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="footer">
+            <p>📊 2025년 9월 기준 | 데이터 출처: 금융감독원, 공정거래위원회, 각사 공시자료</p>
+            <p>💡 한양대 MBA 전문가 팀 분석 | © 2025 Business Analysis Report</p>
+        </div>
+    </div>
+</body>
+</html>
